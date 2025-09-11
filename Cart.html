@@ -39,13 +39,39 @@
         background-color: #8de0a9;
       }
     </style>
-    <title>Hello, World!</title>
+    <title>Shopping Cart</title>
     <link rel="stylesheet" href="styles.css"/>
   </head>
   <body>
     <div class="cart-container">
       <h1>Cart</h1>
-      <button class="checkoutbutton">Checkout</button>
+      <button class="checkoutbutton" onclick="document.getElementById('mobankConfirmDlg').showModal()">Checkout</button>
+      <dialog id="mobankConfirmDlg">
+        <h3>Mobanking Payment Confirmation</h3>
+
+        <p>Screenshot the payment confirmation from MoBanking and insert the image below.</p>
+
+        <div>
+          <input type="file" name="mobanking-payment" value="paid" accept="image/*">
+        </div>
+
+        <!-- Get a different way to include a spacer or fix the size of the popup window and anchor the buttons accordingly -->
+        <p>
+           
+        </p>
+        <div>
+          <button type="submit">
+            Submit
+          </button>
+
+          <button onclick="document.getElementById('mobankConfirmDlg').close()">
+            Close
+          </button>
+        </div>
+        
+      </dialog>
+
+      <!-- Filler Text -->
       <p>
         kfufyktfktktkutfkuttuvtfuvcuktftftyfkutfchfyytfhgcfcyfutrdytvcytkcycvghcjfcychgccyjrctycfxrtxytccf
         tchgfytuu7yrfhgyi87ryfghghguo76r857yrhfgjvhkcjxsryer7tugifugukvgc
