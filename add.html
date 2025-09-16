@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adding to Cart...</title>
+  <style>
+    dialog {
+      border: none;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      background: #333;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup confirmation -->
+  <dialog id="confirmDialog">
+    <p>Item added to cart!</p>
+    <button id="closeBtn">OK</button>
+  </dialog>
+
+  <script>
+    // Products data (name, price, image, link)
+    const products = {
+      "fingerless-glove": {
+        name: "Fingerless Glove",
+        price: 75,
+        image: "glove.jpg",
+        link: "https://yoursite.com/fingerless-glove"
+      },
+      "motorcycle-face-mask": {
+        name: "Motorcycle Face Mask",
+        price: 85,
+        image: "mask.jpg",
+        link: "https://yoursite.com/motorcycle-face-mask"
+      },
+      "skull-mask": {
+        name: "Skull Face Mask",
+        price: 100,
+        image: "skull-mask.jpg",
+        link: "https://yoursite.com/skull-mask"
+      }
+    };
+
+    // Get product ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const itemId = params.get("add");
+
+    if (itemId && products[itemId]) {
+      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      // Check if item exists in cart
+      let existing = cart.find(i => i.id === itemId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({
+          id: itemId,
+          name: products[itemId].name,
+          price: products[itemId].price,
+          image: products[itemId].image,
+          link: products[itemId].link,
+          qty: 1
+        });
+      }
+
+      // Save back to localStorage
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    // Show popup confirmation
+    const dlg = document.getElementById("confirmDialog");
+    const closeBtn = document.getElementById("closeBtn");
+
+    dlg.showModal();
+
+    closeBtn.addEventListener("click", () => {
+      dlg.close();
+      // Go back to storefront
+      window.history.back();
+    });
+  </script>
+</body>
+</html>
